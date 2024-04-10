@@ -1,5 +1,9 @@
 export const colunas = [
     {
+      title: "Código",
+      key: "id",
+    },
+    {
       title: "Nome",
       key: "title",
     },
@@ -8,16 +12,20 @@ export const colunas = [
       key: "description",
     },
     {
-      title: "Preço",
+      title: "Valor",
       key: "price",
     },
     {
       title: "Marca",
-      key: "Brand",
+      key: "brand",
     },
     {
       title: "Categoria",
       key: "category",
+    },
+    {
+      title: "Ações",
+      key: "actions",
     },
   
   ];

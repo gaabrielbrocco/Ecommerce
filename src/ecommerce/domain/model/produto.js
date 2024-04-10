@@ -29,4 +29,4 @@ class Ecommerce {
     }
 }
 
-export default Ecommerce;
+export default Ecommerce; 

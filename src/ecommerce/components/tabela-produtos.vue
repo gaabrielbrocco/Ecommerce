@@ -47,7 +47,7 @@
             variant="solo-filled"
           ></v-text-field>
           <v-btn
-            density="medium"
+            density="comfortable"
             variant="text"
             prepend-icon="mdi-plus"
             color="primary"
@@ -55,7 +55,7 @@
             Incluir
           </v-btn>
           <v-btn
-            density="medium"
+            density="comfortable"
             variant="text"
             prepend-icon="mdi-filter"
             color="primary"
@@ -63,7 +63,7 @@
             Filtro
           </v-btn>
           <v-btn
-            density="medium"
+            density="comfortable"
             variant="text"
             prepend-icon="mdi-reload"
             color="green"
@@ -72,11 +72,20 @@
           </v-btn>
         </v-row>
         <v-data-table
+          density="compact"
           fixed-header
           height="75dvh"
           :headers="controller.colunasTabela.value"
           :items="controller.produtos.value"
         >
+          <template v-slot:item.actions="{ item }">
+            <div class="d-flex">
+              <v-btn @click="controller.visualizar(item)" icon="mdi-eye" density="compact" color="green" class="ma-1"></v-btn>
+              <v-btn @click="controller.alterar(item)" icon="mdi-pencil" density="compact" color="primary" class="ma-1"> </v-btn>
+              <v-btn @click="controller.deletar(item)" icon="mdi-trash-can-outline" density="compact" color="red" class="ma-1">
+              </v-btn>
+            </div>
+          </template>
         </v-data-table>
       </v-card>
     </v-main>
@@ -84,7 +93,6 @@
 </template>
 
 <script setup>
-import MostraValores from "./mostraValores.vue";
 
 const { controller } = defineProps({
   controller: {

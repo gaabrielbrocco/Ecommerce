@@ -1,10 +1,12 @@
 <template>
-    <dialog-form :controller="controller"/>
+    <tabela-produtos :controller="controller"/>
+    <dialog-form :controller="controller" />
   </template>
   
   <script setup>
   import { ecommerceControllerImpl } from "../di/di";
-  import DialogForm from "../components/dialog-form.vue";
+  import TabelaProdutos from "../components/tabela-produtos.vue";
+  import dialogForm from "../components/dialogForm.vue"
   
   const controller = ecommerceControllerImpl();
   </script>
