@@ -1,46 +1,124 @@
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import Produto from "../domain/model/produto";
 import { colunas } from "../const/colunas";
 import { botoes } from "../const/botoes";
+import Swal from "sweetalert2";
 
-const ecommerceController = (buscaProdutosUseCase) => () => {
-  const produtos = ref([]);
-  const produtoSelecionado = ref(null);
-  const colunasTabela = ref(colunas);
-  const linhas = ref([]);
-  const opcoesDeAcao = ref(botoes);
-  const dialogForm = ref(true);
-  const modelProduto = ref(new Produto({}));
+const ecommerceController =
+  (
+    buscaProdutoUseCase,
+    alteraProdutoUseCase,
+    criaProdutoUseCase,
+    deletaProdutoUseCase
+  ) =>
+  () => {
+    const produtos = ref([]);
+    const produtoSelecionado = ref(null);
+    const colunasTabela = ref(colunas);
+    const opcoesDeAcao = ref(botoes);
+    const dialogForm = ref(false);
+    const modelProduto = ref(new Produto({}));
+    const search = ref("");
+    const apenasLeitura = ref(false);
+    const carregando = ref(false);
 
-  onMounted(async () => {
-    produtos.value = await buscaProdutosUseCase();
-  });
+    const paginando = async () => {
+      try {
+        carregando.value = true;
+        produtos.value = await buscaProdutoUseCase();
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `Algo deu errado! ${error}`,
+        });
+      } finally {
+        carregando.value = false;
+      }
+    };
 
-  const visualizar = async (item) => {
-    modelProduto.value = { ...item };
-    dialogForm.value = true;
-  }
+    const alterar = async (item, apenasVisualizacao) => {
+      try {
+        carregando.value = true;
+        apenasLeitura.value = apenasVisualizacao;
+        modelProduto.value = { ...item };
+        dialogForm.value = true;
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `Algo deu errado! ${error}`,
+        });
+      } finally {
+        carregando.value = false;
+      }
+    };
 
-  const alterar = async (item) => {
-    console.log(item);
-  }
+    const incluir = async () => {
+      try {
+        carregando.value = true;
+        modelProduto.value = await criaProdutoUseCase();
+        dialogForm.value = true;
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `Algo deu errado! ${error}`,
+        });
+      } finally {
+        carregando.value = false;
+      }
+    };
 
-  const deletar = async (item) => {
-    console.log(item);
-  }
+    const deletar = async (item) => {
+      try {
 
-  return {
-    produtos,
-    produtoSelecionado,
-    colunasTabela,
-    linhas,
-    opcoesDeAcao,
-    visualizar,
-    alterar,
-    deletar,
-    dialogForm,
-    modelProduto,
+        Swal.fire({
+          title: "Deseja realmente excluir o produto?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Sim",
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            carregando.value = true;
+
+            await deletaProdutoUseCase(item._id);
+            
+
+            Swal.fire({
+              title: "Produto excluído",
+              icon: "success",
+            });
+            await paginando()
+            carregando.value = false;
+          }
+        });
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `Algo deu errado! ${error}`,
+        });
+      }
+    };
+
+    return {
+      produtos,
+      produtoSelecionado,
+      colunasTabela,
+      opcoesDeAcao,
+      alterar,
+      deletar,
+      dialogForm,
+      search,
+      modelProduto,
+      apenasLeitura,
+      carregando,
+      incluir,
+      paginando,
+    };
   };
-};
 
 export default ecommerceController;

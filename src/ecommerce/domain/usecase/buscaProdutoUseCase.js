@@ -1,4 +1,4 @@
-const buscaProdutosUseCase = (repository) => async () => {
+const buscaProdutoUseCase = (repository) => async () => {
     try {
       return await repository();
     } catch (error) {
@@ -6,5 +6,5 @@ const buscaProdutosUseCase = (repository) => async () => {
     }
   };
   
-  export default buscaProdutosUseCase;
+  export default buscaProdutoUseCase;
   

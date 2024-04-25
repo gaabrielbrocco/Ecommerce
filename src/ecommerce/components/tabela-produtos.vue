@@ -32,7 +32,9 @@
     </v-navigation-drawer>
     <v-main>
       <v-app-bar color="gray" theme="dark" permanent>
-        <v-app-bar-title class="px-5 text-h5"> Produtos </v-app-bar-title>
+        <v-col cols="5">
+          <v-app-bar-title class="px-5 text-h5"> Produtos </v-app-bar-title>
+        </v-col>
       </v-app-bar>
 
       <v-card class="my-5">
@@ -45,28 +47,23 @@
             hide-details
             single-line
             variant="solo-filled"
+            v-model="controller.search.value"
           ></v-text-field>
           <v-btn
-            density="comfortable"
+            density="large"
             variant="text"
             prepend-icon="mdi-plus"
             color="primary"
+            @click="controller.incluir()"
           >
             Incluir
           </v-btn>
           <v-btn
-            density="comfortable"
+            density="large"
             variant="text"
-            prepend-icon="mdi-filter"
-            color="primary"
-          >
-            Filtro
-          </v-btn>
-          <v-btn
-            density="comfortable"
-            variant="text"
-            prepend-icon="mdi-reload"
-            color="green"
+            prepend-icon="mdi-refresh"
+            color="warning"
+            @click="controller.paginando"
           >
             Atualizar
           </v-btn>
@@ -75,14 +72,36 @@
           density="compact"
           fixed-header
           height="75dvh"
+          hover
           :headers="controller.colunasTabela.value"
           :items="controller.produtos.value"
+          :search="controller.search.value"
+          :loading="controller.carregando.value"
         >
           <template v-slot:item.actions="{ item }">
             <div class="d-flex">
-              <v-btn @click="controller.visualizar(item)" icon="mdi-eye" density="compact" color="green" class="ma-1"></v-btn>
-              <v-btn @click="controller.alterar(item)" icon="mdi-pencil" density="compact" color="primary" class="ma-1"> </v-btn>
-              <v-btn @click="controller.deletar(item)" icon="mdi-trash-can-outline" density="compact" color="red" class="ma-1">
+              <v-btn
+                @click="controller.alterar(item, true)"
+                icon="mdi-eye"
+                size="x-small"
+                color="green"
+                class="ma-1"
+              ></v-btn>
+              <v-btn
+                @click="controller.alterar(item)"
+                icon="mdi-pencil"
+                size="x-small"
+                color="primary"
+                class="ma-1"
+              >
+              </v-btn>
+              <v-btn
+                @click="controller.deletar(item)"
+                icon="mdi-trash-can-outline"
+                size="x-small"
+                color="red"
+                class="ma-1"
+              >
               </v-btn>
             </div>
           </template>
@@ -93,7 +112,6 @@
 </template>
 
 <script setup>
-
 const { controller } = defineProps({
   controller: {
     type: Object,

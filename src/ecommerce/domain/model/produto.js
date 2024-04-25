@@ -1,31 +1,19 @@
 class Ecommerce {
     constructor({
-        id = 0,
-        title = "" ,
-        description = "" ,
-        price = 0,
-        discountPercentage = 0 ,
-        rating = 0,
-        stock = 0,
-        brand = "",
-        category = "",
-        thumbnail = "",
-        images = "",
+        nome = "",
+        marca = "",
+        categoria = "",
+        descricao = "",
+        preco = 0,
+        qtdEstoque = 0,
 
     }) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.price = price;
-        this.discountPercentage = discountPercentage;
-        this.rating = rating;
-        this.stock = stock;
-        this.brand = brand;
-        this.category = category;
-        this.thumbnail = thumbnail;
-        this.images = images;
-
-
+        this.nome = nome;
+        this.marca = marca;
+        this.categoria = categoria;
+        this.descricao = descricao;
+        this.preco = preco;
+        this.qtdEstoque = qtdEstoque;
     }
 }
 

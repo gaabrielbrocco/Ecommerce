@@ -1,27 +1,27 @@
 export const colunas = [
     {
-      title: "Código",
-      key: "id",
-    },
-    {
       title: "Nome",
-      key: "title",
-    },
-    {
-      title: "Descrição",
-      key: "description",
-    },
-    {
-      title: "Valor",
-      key: "price",
+      key: "nome",
     },
     {
       title: "Marca",
-      key: "brand",
+      key: "marca",
     },
     {
       title: "Categoria",
-      key: "category",
+      key: "categoria",
+    },
+    {
+      title: "Descrição",
+      key: "descricao",
+    },
+    {
+      title: "Preço",
+      key: "preco",
+    },
+    {
+      title: "Quantidade Estoque",
+      key: "qtdEstoque",
     },
     {
       title: "Ações",
