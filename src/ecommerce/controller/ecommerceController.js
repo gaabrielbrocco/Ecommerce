@@ -37,10 +37,6 @@ const ecommerceController =
         apenasLeitura.value = apenasVisualizacao;
         modelProduto.value = { ...item };
         dialogForm.value = true;
-        Swal.fire({
-          title: "Produto alterado",
-          icon: "success",
-        });
       } catch (error) {
         Swal.fire({
           icon: "error",
