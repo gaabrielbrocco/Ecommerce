@@ -54,7 +54,7 @@
             variant="text"
             prepend-icon="mdi-plus"
             color="primary"
-            @click="controller.incluir()"
+            @click="controller.incluir"
           >
             Incluir
           </v-btn>
@@ -73,6 +73,7 @@
           fixed-header
           height="75dvh"
           hover
+          items-per-page="25"
           :headers="controller.colunasTabela.value"
           :items="controller.produtos.value"
           :search="controller.search.value"

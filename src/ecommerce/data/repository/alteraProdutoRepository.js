@@ -1,11 +1,7 @@
-import Produto from "../../domain/model/produto"
-
-const alteraProdutoRepository = (axios) => async (id, payload) => {
+const alteraProdutoRepository = (axios) => async (payload) => {
     try {
-        const response = await axios.put(`/products/${id}`, {body: JSON.stringify(payload)});
-        return response?.data?.map(
-            (produto) => new Produto(produto)
-        ) ?? [];
+        const response = await axios.patch(`/products/${payload._id}`, payload);
+        return response?.data ?? {}
     } catch (error) {
         throw error;
     }

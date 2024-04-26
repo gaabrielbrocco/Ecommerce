@@ -7,8 +7,13 @@
   import { ecommerceControllerImpl } from "../di/di";
   import TabelaProdutos from "../components/tabela-produtos.vue";
   import dialogForm from "../components/dialogForm.vue"
+import { onMounted } from "vue";
   
   const controller = ecommerceControllerImpl();
+
+  onMounted(async () => {
+    await controller.paginando()
+  })
   </script>
   
   <style>

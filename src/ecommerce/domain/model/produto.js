@@ -1,5 +1,8 @@
-class Ecommerce {
+import { toRaw } from "vue";
+
+class Produto {
     constructor({
+        _id = "",
         nome = "",
         marca = "",
         categoria = "",
@@ -8,6 +11,7 @@ class Ecommerce {
         qtdEstoque = 0,
 
     }) {
+        this._id = _id;
         this.nome = nome;
         this.marca = marca;
         this.categoria = categoria;
@@ -15,6 +19,11 @@ class Ecommerce {
         this.preco = preco;
         this.qtdEstoque = qtdEstoque;
     }
+
+    toSave() {
+        const payload = structuredClone(toRaw(this))
+        return payload
+    }
 }
 
-export default Ecommerce; 
+export default Produto; 

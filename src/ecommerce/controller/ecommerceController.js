@@ -5,13 +5,7 @@ import { botoes } from "../const/botoes";
 import Swal from "sweetalert2";
 
 const ecommerceController =
-  (
-    buscaProdutoUseCase,
-    alteraProdutoUseCase,
-    criaProdutoUseCase,
-    deletaProdutoUseCase
-  ) =>
-  () => {
+  (buscaProdutoUseCase, salvaProdutoUseCase, deletaProdutoUseCase) => () => {
     const produtos = ref([]);
     const produtoSelecionado = ref(null);
     const colunasTabela = ref(colunas);
@@ -43,6 +37,10 @@ const ecommerceController =
         apenasLeitura.value = apenasVisualizacao;
         modelProduto.value = { ...item };
         dialogForm.value = true;
+        Swal.fire({
+          title: "Produto alterado",
+          icon: "success",
+        });
       } catch (error) {
         Swal.fire({
           icon: "error",
@@ -57,8 +55,25 @@ const ecommerceController =
     const incluir = async () => {
       try {
         carregando.value = true;
-        modelProduto.value = await criaProdutoUseCase();
+        modelProduto.value = new Produto({});
         dialogForm.value = true;
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `Algo deu errado! ${error}`,
+        });
+      } finally {
+        carregando.value = false;
+      }
+    };
+
+    const salvar = async () => {
+      try {
+        carregando.value = true;
+        await salvaProdutoUseCase(modelProduto.value);
+        dialogForm.value = false;
+        await paginando();
       } catch (error) {
         Swal.fire({
           icon: "error",
@@ -72,7 +87,6 @@ const ecommerceController =
 
     const deletar = async (item) => {
       try {
-
         Swal.fire({
           title: "Deseja realmente excluir o produto?",
           icon: "warning",
@@ -85,13 +99,12 @@ const ecommerceController =
             carregando.value = true;
 
             await deletaProdutoUseCase(item._id);
-            
 
             Swal.fire({
               title: "Produto excluído",
               icon: "success",
             });
-            await paginando()
+            await paginando();
             carregando.value = false;
           }
         });
@@ -118,6 +131,7 @@ const ecommerceController =
       carregando,
       incluir,
       paginando,
+      salvar,
     };
   };
 

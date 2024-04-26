@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="controller.dialogForm.value" max-width="800px">
+  <v-dialog v-model="controller.dialogForm.value" max-width="800px" persistent>
     <v-card>
       <div class="bg-primary">
         <v-card-title>
@@ -14,76 +14,44 @@
             :readonly="controller.apenasLeitura.value"
           >
             <v-row dense>
-              <v-col cols="2">
-                <v-text-field
-                  v-model="controller.modelProduto.value._id"
-                  disabled
-                  color="primary"
-                  label="Código"
-                  variant="underlined"
-                  density="compact"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="10">
+              <v-col cols="6">
                 <v-text-field
                   v-model="controller.modelProduto.value.nome"
-                  color="primary"
                   label="Nome"
-                  variant="underlined"
-                  density="compact"
                 ></v-text-field>
               </v-col>
-              <v-col cols="12">
+              <v-col cols="6">
                 <v-text-field
-                  v-model="controller.modelProduto.value.descricao"
-                  color="primary"
-                  label="Descrição"
-                  variant="underlined"
-                  density="compact"
+                  v-model="controller.modelProduto.value.marca"
+                  label="Marca"
                 ></v-text-field>
               </v-col>
               <v-col cols="4">
                 <v-text-field
                   v-model="controller.modelProduto.value.preco"
-                  color="primary"
                   label="Valor"
-                  variant="underlined"
-                  density="compact"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="4">
-                <v-text-field
-                  v-model="controller.modelProduto.value.marca"
-                  color="primary"
-                  label="Marca"
-                  variant="underlined"
-                  density="compact"
+                  v-maska:[valor]
+                  prefix="R$"
                 ></v-text-field>
               </v-col>
               <v-col cols="4">
                 <v-text-field
                   v-model="controller.modelProduto.value.categoria"
-                  color="primary"
                   label="Categoria"
-                  variant="underlined"
-                  density="compact"
                 ></v-text-field>
               </v-col>
-              <v-col cols="6">
+              <v-col cols="4">
                 <v-text-field
-                  v-model="controller.modelProduto.value.qtdEstoque"
-                  color="primary"
-                  label="Avaliação média"
-                  variant="underlined"
-                  density="compact"
+                  v-model.number="controller.modelProduto.value.qtdEstoque"
+                  type="number"
+                  label="Quantidade em estoque"
                 ></v-text-field>
               </v-col>
-              <v-col cols="6">
-                <v-img
-                  :src="controller.modelProduto.value.images[0]"
-                  v-model="controller.modelProduto.value.images"
-                  height="200px"
-                ></v-img>
+              <v-col cols="12">
+                <v-textarea
+                  v-model="controller.modelProduto.value.descricao"
+                  label="Descrição"
+                ></v-textarea>
               </v-col>
             </v-row>
           </v-form>
@@ -104,10 +72,12 @@
         <v-btn
           color="primary"
           variant="outlined"
-          @click="controller.dialogForm.value = false"
+          @click="controller.salvar"
           prepend-icon="mdi-check"
           :loading="controller.carregando.value"
-          :disabled="controller.carregando.value || controller.apenasLeitura.value"
+          :disabled="
+            controller.carregando.value || controller.apenasLeitura.value
+          "
         >
           Salvar
         </v-btn>
@@ -117,6 +87,12 @@
 </template>
 
 <script setup>
+const valor = {
+  mask: "#.###.###,##",
+  tokens: "9:[0-9]:repeated",
+  reversed: true,
+};
+
 defineProps({
   controller: {
     type: Object,

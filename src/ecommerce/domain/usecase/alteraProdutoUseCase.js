@@ -1,6 +1,6 @@
-const alteraProdutoUseCase = (repository) => async (id,payload) => {
+const alteraProdutoUseCase = (repository) => async (payload) => {
     try {
-      return await repository(id,payload);
+      return await repository(payload);
     } catch (error) {
       throw error;
     }

@@ -10,6 +10,7 @@ import ecommerceController from "../controller/ecommerceController";
 import alteraProdutoUseCase from "../domain/usecase/alteraProdutoUseCase";
 import criaProdutoUseCase from "../domain/usecase/criaProdutoUseCase";
 import deletaProdutoUseCase from "../domain/usecase/deletaProdutoUseCase";
+import salvaProdutoUseCase from "../domain/usecase/salvaProdutoUseCase";
 
 
 const instance = axiosInstance;
@@ -23,8 +24,9 @@ const buscaProdutoUseCaseImpl = buscaProdutoUseCase(buscaProdutoRepositoryImpl)
 const alteraProdutoUseCaseImpl = alteraProdutoUseCase(alteraProdutoRepositoryImpl)
 const criaProdutoUseCaseImpl = criaProdutoUseCase(criaProdutoRepositoryImpl)
 const deletaProdutoUseCaseImpl = deletaProdutoUseCase(deletaProdutoRepositoryImpl)
+const salvaProdutoUseCaseImpl = salvaProdutoUseCase(alteraProdutoUseCaseImpl, criaProdutoUseCaseImpl)
 
-const ecommerceControllerImpl = ecommerceController(buscaProdutoUseCaseImpl, alteraProdutoUseCaseImpl, criaProdutoUseCaseImpl, deletaProdutoUseCaseImpl)
+const ecommerceControllerImpl = ecommerceController(buscaProdutoUseCaseImpl, salvaProdutoUseCaseImpl, deletaProdutoUseCaseImpl)
 
 
 export { ecommerceControllerImpl }

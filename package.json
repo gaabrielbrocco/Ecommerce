@@ -10,6 +10,7 @@
     "@mdi/font": "7.0.96",
     "axios": "^1.6.8",
     "dayjs": "^1.11.10",
+    "maska": "^2.1.11",
     "roboto-fontface": "*",
     "sweetalert2": "^11.10.8",
     "vue": "^3.4.0",

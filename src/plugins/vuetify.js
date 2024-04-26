@@ -16,4 +16,7 @@ export default createVuetify({
   theme: {
     defaultTheme: 'dark',
   },
+  defaults: {
+    VTextField: { density: "compact", variant: "underlined", color: "primary" }
+  }
 })
